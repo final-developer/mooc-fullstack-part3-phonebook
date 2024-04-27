@@ -1,14 +1,15 @@
+/*global process*/
 require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 
-morgan.token('body', (req, res) => {
+morgan.token('body', (req) => {
    return JSON.stringify(req.body)
 })
 
 const app = express()
 
-app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'));
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 app.use(express.json())
 app.use(express.static('dist'))
 
@@ -17,10 +18,6 @@ app.use(cors())
 
 // MongoDB and Mongoose handling
 const Person = require('./modules/person')
-
-let entries = [
-
-]
 
 // get all entries
 app.get('/api/persons', (request, response) => {
@@ -45,7 +42,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
 
    // response.status(204).end()
    Person.findByIdAndDelete(request.params.id)
-      .then(result => response.status(204).end())
+      .then(() => response.status(204).end())
       .catch(error => next(error))
 })
 

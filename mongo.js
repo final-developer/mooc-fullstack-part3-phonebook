@@ -1,3 +1,4 @@
+/*global process*/
 const mongoose = require('mongoose')
 
 // define schema
@@ -11,9 +12,9 @@ const Person = mongoose.model('Person', personSchema)
 // get all persons from db
 const getPersons = () => {
    Person.find({}).then(result => {
-      console.log("phonebook:")
+      console.log('phonebook:')
       result.forEach(person => {
-         console.log(`${person["name"]} ${person["number"]}`)
+         console.log(`${person['name']} ${person['number']}`)
       })
       mongoose.connection.close()
    })
@@ -23,7 +24,7 @@ const getPersons = () => {
 const addPerson = () => {
    // generate random id
    function getRandomId(max) {
-      return Math.floor(Math.random() * max);
+      return Math.floor(Math.random() * max)
    }
 
    // adding new person to phonebook
@@ -33,7 +34,7 @@ const addPerson = () => {
       number: number,
    })
    person.save().then(result => {
-      console.log(`added ${result["name"]} number ${result["number"]} to phonebook`)
+      console.log(`added ${result['name']} number ${result['number']} to phonebook`)
       mongoose.connection.close()
    })
 }
